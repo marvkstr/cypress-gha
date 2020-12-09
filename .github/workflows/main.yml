@@ -89,7 +89,7 @@ jobs:
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
   deploy_to_cloudformation:
-    needs: [push_cypress, push_sentimentalyzer]
+    #needs: [push_cypress, push_sentimentalyzer]
     name: deploy_to_cloudformation
     runs-on: ubuntu-latest
     steps:
