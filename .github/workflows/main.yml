@@ -22,6 +22,7 @@ jobs:
       - uses: actions/checkout@v2
       - run:  sh 'e2e_test.sh'
   build_images:
+    needs: e2e-test
     runs-on: ubuntu-latest
     steps:
     - name: Login to Amazon ECR
