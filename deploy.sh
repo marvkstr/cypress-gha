@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 STACK_NAME=$1
 STACK_INFO=$2
