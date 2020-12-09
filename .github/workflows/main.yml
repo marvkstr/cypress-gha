@@ -108,7 +108,8 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
       
       - name: Deploy Stack
-        run: sh './deploy.sh githubActions ParameterKey=StackInfo,ParameterValue=githubActionsStack'
+        uses: chrislennon/action-aws-cli@v1.1
+      - run: sh './deploy.sh githubActions ParameterKey=StackInfo,ParameterValue=githubActionsStack'
 
   # deploy to aws
         #aws cloudformataion build https://github.com/marketplace/actions/aws-cloudformation-deploy-cloudformation-stack-action-for-github-actions
