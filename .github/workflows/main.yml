@@ -107,10 +107,13 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
       
-      - name: Deploy Stack
-        uses: chrislennon/action-aws-cli@v1.1
-      - run: sh './deploy.sh githubActions ParameterKey=StackInfo,ParameterValue=githubActionsStack'
-
+      - name: Deploy to AWS CloudFormation
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        with:
+          name: githubActions
+          template: ./cypress-docker.yml
+          parameter-overrides: "StackInfo=githubActionsStack"
+          
   # deploy to aws
         #aws cloudformataion build https://github.com/marketplace/actions/aws-cloudformation-deploy-cloudformation-stack-action-for-github-actions
         #aws ecs deploy? https://github.com/aws-actions/amazon-ecs-deploy-task-definition
