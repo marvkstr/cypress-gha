@@ -46,10 +46,10 @@ jobs:
       id: build-cypress-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: cypress
+        ECR_REPOSITORY: github_cypress
         IMAGE_TAG: latest
       run: |
-        # Build a docker container and push it to ECR 
+        # Build a docker container and push it to ECR
         docker build -f cypress.dk -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         echo "Pushing cypress image to ECR..."
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
@@ -74,15 +74,15 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
-      
+
     - name: Build, tag, and push cypress image to Amazon ECR
       id: build-sentimentalyzer-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: sentimentalyzer
+        ECR_REPOSITORY: github_sentimentalyzer
         IMAGE_TAG: latest
       run: |
-        # Build a docker container and push it to ECR 
+        # Build a docker container and push it to ECR
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         echo "Pushing sentimentalyzer image to ECR..."
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
@@ -102,14 +102,14 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-1
-      
+
       - name: Deploy to AWS CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: githubActions
           template: ./cypress-docker.yml
           parameter-overrides: "StackInfo=githubActionsStack"
-          
+
   # deploy to aws
         #aws cloudformataion build https://github.com/marketplace/actions/aws-cloudformation-deploy-cloudformation-stack-action-for-github-actions
         #aws ecs deploy? https://github.com/aws-actions/amazon-ecs-deploy-task-definition
